@@ -1,0 +1,68 @@
+﻿@model Ecommerce_website.Models.admin
+@{
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+<!-- jQuery (required for Bootstrap's JavaScript plugins) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Bootstrap JavaScript -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
+
+@{
+    ViewData["Title"] = "admin_Edit";
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @TempData["ErrorMessage"]
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+
+<h1>admin_Edit</h1>
+
+<h4>admin</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="admin_Edit" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="admin_id" />
+            <div class="form-group">
+                <label asp-for="admin_name" class="control-label"></label>
+                <input asp-for="admin_name" class="form-control" value="@Model.admin_name" />
+                <span asp-validation-for="admin_name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="admin_email" class="control-label"></label>
+                <input asp-for="admin_email" class="form-control" value="@Model.admin_email" />
+                <span asp-validation-for="admin_email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="admin_password" class="control-label"></label>
+                <input asp-for="admin_password" class="form-control" value="@Model.admin_password" />
+                <span asp-validation-for="admin_password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="admin_image" class="control-label"></label>
+                <input asp-for="admin_image" type="file" class="form-control" value="@Model.admin_image" />
+                <span asp-validation-for="admin_image" class="text-danger"></span>
+                <img src="~/Images/@Model.admin_image" asp-append-version="true" width="100px" height="70px" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+
+

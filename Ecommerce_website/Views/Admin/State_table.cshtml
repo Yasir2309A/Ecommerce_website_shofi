@@ -1,0 +1,54 @@
+﻿@model IEnumerable<Ecommerce_website.Models.State>
+
+@{
+    ViewData["Title"] = "State Table";
+}
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Bootstrap JavaScript -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
+@{
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["SuccessMessage"]
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+
+<h1 class="text-center my-4">State Table</h1>
+
+
+
+<!-- Table Container -->
+<div class="table-responsive">
+    <table class="table table-bordered table-striped table-hover shadow-sm rounded">
+        <thead class="thead-dark">
+            <tr>
+                <th class="text-center">State Name</th>
+                <th class="text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.state_name)
+                    </td>
+                    <td class="text-center">
+                        <a asp-action="state_Edit" asp-route-id="@item.state_id" class="btn btn-info btn-sm">Edit</a> |
+                        <a asp-action="State_delete" asp-route-id="@item.state_id" class="btn btn-danger btn-sm">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

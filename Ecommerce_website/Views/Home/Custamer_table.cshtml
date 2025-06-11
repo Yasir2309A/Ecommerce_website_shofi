@@ -1,0 +1,70 @@
+﻿@model IEnumerable<Ecommerce_website.Models.customer>
+
+@{
+    ViewData["Title"] = "Custamer_table";
+}
+
+<h1>Custamer_table</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.customer_name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.customer_email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.coustomer_password)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.customer_phone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Country)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.state)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.customer_name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.customer_email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.coustomer_password)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.customer_phone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Country)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.state.state_name)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.customer_id" class="btn btn-info">Edit</a> |
+               
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,104 @@
+﻿@{
+    ViewBag.Title = "Verify Email";
+}
+<style>
+    .verification-container {
+        max-width: 400px;
+        margin: 50px auto;
+        text-align: center;
+    }
+
+    .code-inputs {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+
+        .code-inputs input {
+            width: 50px;
+            height: 60px;
+            font-size: 24px;
+            text-align: center;
+            border: 2px solid #ced4da;
+            border-radius: 8px;
+            background-color: #ffffff;
+            color: #000000; /* ✅ Black text */
+            font-weight: bold;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+            .code-inputs input:focus {
+                border-color: #007bff;
+                outline: none;
+                box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+            }
+
+    .btn-primary {
+        width: 100%;
+        padding: 10px;
+        font-size: 18px;
+    }
+
+    .alert {
+        margin-top: 20px;
+    }
+</style>
+
+<div class="verification-container">
+    <h2 class="mb-4">Email Verification</h2>
+    <form asp-action="VerifyEmail" method="post" id="verifyForm">
+        <div class="code-inputs">
+            @for (int i = 0; i < 6; i++)
+            {
+                <input type="text" maxlength="1" pattern="[0-9]*" inputmode="numeric" class="form-control code" required />
+            }
+        </div>
+        <input type="number" name="code" id="fullCode" /> <!-- ✅ Use name="code" so server can read it -->
+        <button type="submit" class="btn btn-primary">Verify</button>
+    </form>
+
+    @if (TempData["error"] != null)
+    {
+        <div class="alert alert-danger">@TempData["error"]</div>
+    }
+</div>
+
+<script>
+    const inputs = document.querySelectorAll('.code');
+
+    inputs.forEach((input, idx) => {
+        // Move to next input on input
+        input.addEventListener('input', () => {
+            if (input.value.length === 1 && idx < inputs.length - 1) {
+                inputs[idx + 1].focus();
+            }
+        });
+
+        // Move to previous input on backspace
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Backspace' && input.value === '' && idx > 0) {
+                inputs[idx - 1].focus();
+            }
+        });
+
+        // Handle pasting full code
+        input.addEventListener('paste', (e) => {
+            e.preventDefault();
+            const pasteData = e.clipboardData.getData('text').trim();
+            if (/^\d{6}$/.test(pasteData)) {
+                pasteData.split('').forEach((digit, i) => {
+                    if (inputs[i]) inputs[i].value = digit;
+                });
+                inputs[5].focus();
+            }
+        });
+    });
+
+    // Combine code into hidden input
+    document.getElementById('verifyForm').addEventListener('submit', function (e) {
+        let code = '';
+        inputs.forEach(input => code += input.value);
+        document.getElementById('fullCode').value = code;
+    });
+</script>

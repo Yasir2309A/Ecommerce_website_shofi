@@ -1,0 +1,87 @@
+﻿@model Ecommerce_website.Models.product
+
+@{
+    var product = Model;
+}
+
+@if (product == null)
+{
+    <h3>Product not found.</h3>
+}
+else
+{
+    <section class="tp-product-details-area">
+        <div class="tp-product-details-top pb-115">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-7 col-lg-6">
+                        <div class="tp-product-details-thumb-wrapper tp-tab d-sm-flex">
+                            <nav>
+                            </nav>
+                            <div class="tab-content m-img" id="productDetailsNavContent">
+                                <div class="tab-pane fade show active" id="nav-1" role="tabpanel" aria-labelledby="nav-1-tab" tabindex="0">
+                                    <div class="tp-product-details-nav-main-thumb">
+                                        <!-- Safe navigation to avoid null reference on product_image -->
+                                        @if (!string.IsNullOrEmpty(product.product_image))
+                                        {
+                                            <img src="~/Images/@product.product_image" asp-append-version="true" alt="product-electronic">
+                                        }
+                                        else
+                                        {
+                                            <img src="~/Images/default-product-image.jpg" alt="No image available">
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-5 col-lg-6">
+                        <div class="tp-product-details-wrapper">
+                            <div class="tp-product-details-category">
+                                <!-- Checking if category is available, if not leave it blank -->
+                                <span>@product.Catogery?.cat_name</span>
+                            </div>
+                            <h3 class="tp-product-details-title">@product.product_name</h3>
+                            <p>@product.product_description</p>
+                            <div class="tp-product-details-price-wrapper mb-20">
+                                <span class="tp-product-details-price new-price">Rs. @product.product_price</span>
+                            </div>
+                            <div class="tp-product-details-action-wrapper">
+                                <h3 class="tp-product-details-action-title">Quantity</h3>
+                                <div class="tp-product-details-action-item-wrapper d-flex align-items-center">
+
+
+
+                                    <form asp-action="ProductAction" method="post">
+                                        <div class="tp-product-details-quantity mb-15 mr-15">
+                                            <input class="tp-product-details-quantity" name="quantity" type="number" value="1" min="1" />
+                                        </div>
+
+                                        <input type="hidden" name="pro_id" value="@product.product_id" />
+
+                                        <div class="tp-product-details-add-to-cart mb-15 w-100">
+                                            <button type="submit" name="submitType" value="add" class="tp-product-details-add-to-cart-btn w-100">
+                                                Add To Cart
+                                            </button>
+                                        </div>
+
+                                        <div class="tp-product-details-add-to-cart mb-15 w-100">
+                                            <button type="submit" name="submitType" value="buy" class="tp-product-details-buy-now-btn w-100">
+                                                Buy Now
+                                            </button>
+                                        </div>
+                                    </form>
+
+
+                                 
+                                </div>
+                                
+                            
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}

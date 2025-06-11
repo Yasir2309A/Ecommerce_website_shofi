@@ -1,0 +1,73 @@
+﻿@model IEnumerable<Ecommerce_website.Models.order_detail_view>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Bootstrap JavaScript -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
+@{
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["SuccessMessage"]
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+<div class="container my-5">
+    <h2 class="text-center mb-4 text-primary fw-bold">📦 All Orders</h2>
+
+    <div class="table-responsive">
+        <table class="table table-hover table-bordered shadow-sm rounded">
+            <thead class="table-dark text-center">
+                <tr>
+                    <th>Order ID</th>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Status</th>
+                    <th>Total</th>
+                    <th>Customer</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>State</th>
+                    <th>Address</th>
+                    <th>Action</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody class="text-center align-middle">
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.order_id</td>
+                        <td>@item.product_name</td>
+                        <td>@item.quantity</td>
+                        <td>
+                            <span class="badge bg-@(item.order_status == "Delivered" ? "success" : item.order_status == "Pending" ? "warning text-dark" : "secondary")">
+                                @item.order_status
+                            </span>
+                        </td>
+                        <td class="fw-bold text-success">Rs. @item.total</td>
+                        <td>@item.ord_name</td>
+                        <td>@item.ord_email</td>
+                        <td>@item.ord_phone</td>
+                        <td>@item.state_name</td>
+                        <td>@item.ord_address</td>
+                        <td>
+                            <a href="@Url.Action("orderedit", "Admin", new { id = item.order_id })" class="btn btn-sm btn-primary">
+                                🔍 View Details
+                            </a>
+                        </td>
+                        <td>
+                            <a asp-action="DeleteOrder" asp-route-order_id="@item.order_id" class="btn btn-danger btn-sm">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

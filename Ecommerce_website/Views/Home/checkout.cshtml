@@ -1,0 +1,156 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var product = ViewBag.Product as Ecommerce_website.Models.product;
+    var customer = ViewBag.Customer as Ecommerce_website.Models.customer;
+    int quantity = ViewBag.Quantity != null ? (int)ViewBag.Quantity : 1;
+    int total = (product != null) ? product.product_price * quantity : 0;
+}
+
+<style>
+    .custom-card {
+        background-color: #fdfdfd;
+        border-radius: 1rem;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+        overflow: hidden;
+    }
+
+    .custom-header {
+        background-color: #0d6efd;
+        color: white;
+        font-size: 1.2rem;
+        font-weight: 600;
+        padding: 1rem 1.25rem;
+    }
+
+    .custom-body {
+        padding: 1.5rem;
+    }
+
+    .table th {
+        background-color: #e9ecef;
+        font-weight: 600;
+    }
+
+    .table td {
+        background-color: #f8f9fa;
+    }
+
+    .total-row {
+        background-color: #d1e7dd !important;
+        font-weight: bold;
+        color: #0f5132;
+    }
+
+    .form-label {
+        font-weight: 600;
+        color: #343a40;
+    }
+
+    .btn-checkout {
+        background-color: #198754;
+        color: white;
+        font-weight: bold;
+        font-size: 1.1rem;
+    }
+
+    .btn-checkout:hover {
+        background-color: #157347;
+    }
+</style>
+
+<div class="container my-5">
+    @if (product == null || customer == null)
+    {
+        <div class="alert alert-danger text-center fw-bold">
+            ❌ Required data missing. Please login again or go back to the product page.
+        </div>
+    }
+    else
+    {
+        <div class="row g-4">
+            <!-- Product Summary -->
+            <div class="col-md-6">
+                <div class="custom-card">
+                    <div class="custom-header">
+                        🛍 Product Summary
+                    </div>
+                    <div class="custom-body">
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>Category</th>
+                                <td>@product.Catogery?.cat_name</td>
+                            </tr>
+                            <tr>
+                                <th>Name</th>
+                                <td>@product.product_name</td>
+                            </tr>
+                            <tr>
+                                <th>Price</th>
+                                <td>Rs. @product.product_price</td>
+                            </tr>
+                            <tr>
+                                <th>Quantity</th>
+                                <td>@quantity</td>
+                            </tr>
+                            <tr class="total-row">
+                                <th>Total</th>
+                                <td>Rs. @total</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Checkout Form -->
+            <div class="col-md-6">
+                <div class="custom-card">
+                    <div class="custom-header bg-secondary">
+                        📦 Shipping & Order Details
+                    </div>
+                    <div class="custom-body">
+                        <form asp-action="checkout" method="post">
+                            <input type="hidden" name="pro_id" value="@product.product_id" />
+                            <input type="hidden" name="quantity" value="@quantity" />
+
+                            <div class="mb-3">
+                                <label class="form-label">Full Name</label>
+                                <input name="ord_name" class="form-control" value="@customer.customer_name" required />
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Email</label>
+                                <input type="email" name="ord_email" class="form-control" value="@customer.customer_email" required />
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Phone</label>
+                                <input type="tel" name="ord_phone" class="form-control" value="@customer.customer_phone" required />
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">State</label>
+                                <select name="state_id" class="form-select" required>
+                                    @foreach (var state in ViewBag.States as List<Ecommerce_website.Models.State>)
+                                    {
+                                        var selected = customer != null && customer.state_id == state.state_id ? "selected" : "";
+                                        <option value="@state.state_id" >@state.state_name</option>
+                                    }
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Address</label>
+                                <textarea name="ord_address" class="form-control" rows="3" required>@customer.address</textarea>
+                            </div>
+
+                            <button type="submit" class="btn btn-checkout w-100 mt-3">
+                                ✅ Place Order
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

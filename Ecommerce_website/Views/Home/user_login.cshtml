@@ -1,0 +1,79 @@
+﻿@model Ecommerce_website.Models.customer
+
+@{
+    ViewData["Title"] = "User Login";
+}
+
+<style>
+    body {
+        background-color: #ffffff; /* White background */
+    }
+
+    .login-container {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .login-box {
+        width: 100%;
+        max-width: 400px;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        background-color: #f9f9f9;
+    }
+
+    .form-control {
+        border-radius: 5px;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border: none;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+    .text-danger {
+        font-size: 0.875rem;
+    }
+</style>
+
+<div class="login-container">
+    <div class="login-box">
+        <h2 class="text-center mb-4">User Login</h2>
+
+        <form asp-action="user_login">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group mb-3">
+                <label asp-for="customer_email" class="control-label"></label>
+                <input asp-for="customer_email" class="form-control" />
+                <span asp-validation-for="customer_email" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="coustomer_password" class="control-label"></label>
+                <input asp-for="coustomer_password" type="password" class="form-control" />
+                <span asp-validation-for="coustomer_password" class="text-danger"></span>
+            </div>
+
+            <div class="form-group text-center">
+                <input type="submit" value="Login" class="btn btn-primary w-100" />
+            </div>
+
+            @if (ViewBag.error != null)
+            {
+                <p class="text-danger text-center">@ViewBag.error</p>
+            }
+        </form>
+
+        <div class="text-center mt-3">
+            <a asp-action="Index" class="text-muted">Back to Home</a>
+        </div>
+    </div>
+</div>

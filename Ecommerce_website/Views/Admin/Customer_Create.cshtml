@@ -1,0 +1,71 @@
+﻿@model Ecommerce_website.Models.customer
+
+@{
+    ViewData["Title"] = "Customer_Create";
+}
+
+@{
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+@if (TempData["error"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @TempData["error"]
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+<h1>Customer_Create</h1>
+
+<h4>customer</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Customer_Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="customer_name" class="control-label"></label>
+                <input asp-for="customer_name" class="form-control" />
+                <span asp-validation-for="customer_name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="customer_email" class="control-label"></label>
+                <input asp-for="customer_email" class="form-control" />
+                <span asp-validation-for="customer_email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="coustomer_password" class="control-label"></label>
+                <input asp-for="coustomer_password" class="form-control" />
+                <span asp-validation-for="coustomer_password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="customer_phone" class="control-label"></label>
+                <input asp-for="customer_phone" class="form-control" />
+                <span asp-validation-for="customer_phone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Country" class="control-label"></label>
+                <input asp-for="Country" class="form-control" />
+                <span asp-validation-for="Country" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="state_id" class="control-label"></label>
+                <select asp-for="state_id" class ="form-control" asp-items="ViewBag.state_id"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="address" class="control-label"></label>
+                <input asp-for="address" class="form-control" />
+                <span asp-validation-for="address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

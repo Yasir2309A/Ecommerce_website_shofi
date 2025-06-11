@@ -1,0 +1,85 @@
+﻿@model Ecommerce_website.Models.customer
+
+@{
+    ViewData["Title"] = "Customer Registration";
+}
+
+<h2 class="text-center mt-4">Customer Registration</h2>
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <!-- Success or Error Message -->
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+        }
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+        }
+
+        <form asp-action="Customer_Create" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <!-- Full Name -->
+            <div class="form-group">
+                <label  class="control-label mt-3">UserName</label>
+                <input asp-for="customer_name" class="form-control mt-1" placeholder="Enter full name" />
+                <span asp-validation-for="customer_name" class="text-danger"></span>
+            </div>
+
+            <!-- Email -->
+            <div class="form-group">
+                <label  class="control-label mt-3">Email</label>
+                <input asp-for="customer_email" class="form-control mt-1" placeholder="Enter email address" />
+                <span asp-validation-for="customer_email" class="text-danger"></span>
+            </div>
+
+            <!-- Password -->
+            <div class="form-group">
+                <label  class="control-label mt-3">Password</label>
+                <input asp-for="coustomer_password" type="password" class="form-control mt-1" placeholder="Enter password" />
+                <span asp-validation-for="coustomer_password" class="text-danger"></span>
+            </div>
+
+            <!-- Phone -->
+            <div class="form-group">
+                <label  class="control-label mt-3">Phone</label>
+                <input asp-for="customer_phone" class="form-control mt-1" placeholder="Enter phone number" />
+                <span asp-validation-for="customer_phone" class="text-danger"></span>
+            </div>
+
+            <!-- Country -->
+            <div class="form-group">
+                <label  class="control-label mt-3">Country</label>
+                <input asp-for="Country" class="form-control mt-1" value="Pakistan" readonly />
+                <span asp-validation-for="Country" class="text-danger"></span>
+            </div>
+
+            <!-- State Dropdown -->
+            <div class="form-group">
+                <label  class="control-label mt-3">State</label>
+                <select asp-for="state_id" class="form-control mt-1" asp-items="ViewBag.state_id">
+       
+                </select>
+                <span asp-validation-for="state_id" class="text-danger"></span>
+            </div>
+
+            <!-- Address -->
+            <div class="form-group">
+                <label class="control-label mt-3">Address</label>
+                <textarea asp-for="address" class="form-control mt-1" rows="3" placeholder="Enter your address"></textarea>
+                <span asp-validation-for="address" class="text-danger"></span>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="form-group text-center">
+                <input type="submit" value="Register" class="btn btn-primary btn-lg mt-4 px-5" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

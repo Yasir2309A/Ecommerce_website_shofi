@@ -1,0 +1,41 @@
+﻿@model Ecommerce_website.Models.catogery
+
+@{
+    ViewData["Title"] = "Catogery";
+}
+@{
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+@if (TempData["error"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @TempData["error"]
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+<h1>Catogery</h1>
+
+<h4>catogery</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Catogery">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="cat_name" class="control-label"></label>
+                <input asp-for="cat_name" class="form-control" />
+                <span asp-validation-for="cat_name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

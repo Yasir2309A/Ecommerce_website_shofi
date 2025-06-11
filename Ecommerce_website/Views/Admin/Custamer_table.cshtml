@@ -1,0 +1,98 @@
+﻿@model IEnumerable<Ecommerce_website.Models.customer>
+
+@{
+    ViewData["Title"] = "Customer Table";
+}
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Bootstrap JavaScript -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
+@{
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["SuccessMessage"]
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+
+@if (TempData["error_delete"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @TempData["error_delete"]
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+
+<h1 class="text-center my-4">Customer Table</h1>
+
+
+
+<!-- Wrapper for scrollable table -->
+<div class="table-responsive">
+    <table class="table table-bordered table-striped table-hover shadow-sm rounded">
+        <thead class="thead-dark">
+            <tr>
+                <th class="text-center">Customer Name</th>
+                <th class="text-center">Email</th>
+                <th class="text-center">Password</th>
+                <th class="text-center">Phone</th>
+                <th class="text-center">Country</th>
+                <th class="text-center">Address</th>
+                <th class="text-center">State</th>
+                <th class="text-center">Edit</th>
+                <th class="text-center">Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.customer_name)
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.customer_email)
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.coustomer_password)
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.customer_phone)
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.Country)
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.address)
+                    </td>
+                    <td class="text-center">
+                        @if (item.state != null)
+                        {
+                            @Html.DisplayFor(modelItem => item.state.state_name)
+                        }
+                        else
+                        {
+                            <span>No State</span> <!-- or any default text you prefer -->
+                        }
+                    </td>
+                    <td class="text-center">
+                        <a asp-action="cutomer_edit" asp-route-id="@item.customer_id" class="btn btn-info btn-sm">Edit</a>
+                    </td>
+                    <td class="text-center">
+                        <a asp-action="cutomer_delete" asp-route-id="@item.customer_id" class="btn btn-danger btn-sm">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

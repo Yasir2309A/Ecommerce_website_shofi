@@ -1,0 +1,46 @@
+﻿
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Bootstrap JavaScript -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
+@if (TempData["error"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["error"]
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+
+<table class="table table-bordered table-striped table-hover mt-4">
+    <thead class="table-dark text-center">
+        <tr>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Price (per item)</th>
+            <th>Total Price</th>
+            <th>Description</th>
+            <th>Address</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody class="text-center">
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.products?.product_name</td>
+                <td>@item.quantity</td>
+                <td>Rs. @item.products?.product_price</td>
+                <td>Rs. @item.total_price</td>
+                <td>@item.products?.product_description</td>
+                <td>@item.customers?.address</td>
+                <td>
+
+                    <a asp-action="cart_deleted" asp-route-id="@item.cart_id" class="btn btn-danger btn-sm">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

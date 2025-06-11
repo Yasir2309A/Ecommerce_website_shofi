@@ -1,0 +1,53 @@
+﻿@model Ecommerce_website.Models.cart
+
+@{
+    ViewData["Title"] = "cart_update";
+}
+
+<h1 class="text-center my-4">Update Cart</h1>
+
+<hr />
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm rounded">
+                <div class="card-header bg-primary text-white text-center">
+                    <h4 class="text-white">Update Cart</h4>
+                </div>
+                <div class="card-body">
+                    <form asp-action="cart_update">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                        
+                        <!-- Hidden Fields -->
+                        <input type="hidden" asp-for="cart_id" />
+                        <input type="hidden" asp-for="product_id" />
+                        <input type="hidden" asp-for="customer_id" />
+                        <input type="hidden" asp-for="quantity" />
+                        
+                        <!-- Status Dropdown -->
+                        <div class="form-group">
+                            <label for="status">Status</label>
+                            <select name="Status" asp-for="status" class="form-control">
+                                <option value="Pending">Pending</option>
+                                <option value="Order">Order</option>
+                            </select>
+                            <span asp-validation-for="status" class="text-danger"></span>
+                        </div>
+
+                        <!-- Save Button -->
+                        <div class="form-group text-center">
+                            <input type="submit" value="Update" class="btn btn-primary" />
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer text-center">
+                    <a asp-action="Index" class="btn btn-secondary btn-sm">Back to List</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Optional: Bootstrap validation scripts -->
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
