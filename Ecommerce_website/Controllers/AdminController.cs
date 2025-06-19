@@ -21,16 +21,16 @@ namespace Ecommerce_website.Controllers
 
         public IActionResult Index()
         {
-            //string admin = HttpContext.Session.GetString("mysession");
-            //if(admin !=null)
-            //{
-            //    return View("Index");
-            //}
-            //else
-            //{
-            //    return RedirectToAction("Login");
-            //}
-            return View();
+            string admin = HttpContext.Session.GetString("mysession");
+            if (admin != null)
+            {
+                return View("Index");
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
+           
         }
 
         //admin Login Start
@@ -49,6 +49,7 @@ namespace Ecommerce_website.Controllers
                 HttpContext.Session.SetString("mysession", admin.admin_id.ToString());
                 HttpContext.Session.SetString("adminName", admin.admin_name);
                 HttpContext.Session.SetString("admin_image", admin.admin_image);
+                HttpContext.Session.SetString("email", admin.admin_email);
 
                 return RedirectToAction("Index");
             }
@@ -141,7 +142,16 @@ namespace Ecommerce_website.Controllers
 
         public IActionResult State_Create()
         {
-            return View();
+            string admin = HttpContext.Session.GetString("mysession");
+            if (admin != null)
+            {
+                return View("State_Create");
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
+          
         }
 
         [HttpPost]
@@ -165,8 +175,17 @@ namespace Ecommerce_website.Controllers
 
         public IActionResult State_table()
         {
-            var data = context.states.ToList();
-            return View(data);
+            string admin = HttpContext.Session.GetString("mysession");
+            if (admin != null)
+            {
+                var data = context.states.ToList();
+                return View(data);
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
+           
         }
 
         public IActionResult state_Edit(int id)
@@ -215,19 +234,16 @@ namespace Ecommerce_website.Controllers
      
         public IActionResult Custamer_table()
         {
-            //string admin = HttpContext.Session.GetString("mysession");
-            //if (admin != null)
-            //{
-            //    return View("Index");
-            //}
-            //else
-            //{
-            //    return RedirectToAction("Login");
-            //}
-
-            var customers = context.customers.Include(c => c.state).ToList();
-    
-            return View(customers);
+            string admin = HttpContext.Session.GetString("mysession");
+            if (admin != null)
+            {
+                var customers = context.customers.Include(c => c.state).ToList();
+                return View(customers);
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
 
         }
 
@@ -273,7 +289,17 @@ namespace Ecommerce_website.Controllers
             //catogery 
         public IActionResult Catogery()
         {
-            return View();
+            string admin = HttpContext.Session.GetString("mysession");
+            if (admin != null)
+            {
+                return View("Catogery");
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
+
+          
         }
 
         [HttpPost]
@@ -295,8 +321,17 @@ namespace Ecommerce_website.Controllers
 
         public IActionResult catogery_table()
         {
-            var data = context.catogerys.ToList();
-            return View(data);
+            string admin = HttpContext.Session.GetString("mysession");
+            if (admin != null)
+            {
+                var data = context.catogerys.ToList();
+                return View(data);
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
+         
         }
 
         public IActionResult catogery_edit(int id)
@@ -347,6 +382,13 @@ namespace Ecommerce_website.Controllers
 
         public IActionResult product()
         {
+            string admin = HttpContext.Session.GetString("mysession");
+            if (admin == null)
+            {
+                return RedirectToAction("Login");
+            }
+         
+            
             // Ensure context is properly initialized and states are available
             if (context == null || !context.catogerys.Any())
             {
@@ -379,8 +421,17 @@ namespace Ecommerce_website.Controllers
 
         public IActionResult product_table()
         {
-            var data = context.products.Include(p => p.Catogery).ToList();
-            return View(data);
+            string admin = HttpContext.Session.GetString("mysession");
+            if (admin != null)
+            {
+                var data = context.products.Include(p => p.Catogery).ToList();
+                return View(data);
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
+          
         }
 
         public IActionResult product_edit(int id)
@@ -448,8 +499,17 @@ namespace Ecommerce_website.Controllers
 
         public IActionResult feedback_table()
         {
-            var data = context.feedbacks.ToList();
-            return View(data);
+            string admin = HttpContext.Session.GetString("mysession");
+            if (admin != null)
+            {
+                var data = context.feedbacks.ToList();
+                return View(data);
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
+           
         }
 
         [HttpGet]
@@ -472,14 +532,22 @@ namespace Ecommerce_website.Controllers
         }
         public IActionResult cart_table()
         {
-            
-            var data = context.carts
-                  // Ensure product is loaded
+            string admin = HttpContext.Session.GetString("mysession");
+            if (admin != null)
+            {
+                var data = context.carts
+                    // Ensure product is loaded
                     .Include(c => c.customers)
-                     .Include(p=>p.products)
+                     .Include(p => p.products)
                       .ToList();
 
-            return View(data);
+                return View(data);
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
+          
         }
 
 
